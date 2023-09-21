@@ -44,7 +44,7 @@ public sealed class CreateRatingCommandHandler : IRequestHandler<CreateRatingReq
             return ErrorResponse.DataLoss(Instance, detail);
         }
 
-        await _mediator.Publish(new CreatedRatingNotification(entity), cancellationToken);
+        await _mediator.Publish(new CalculatingRatingNotification(entity), cancellationToken);
         return CreatedResponse.Successful(entity.Id, Instance);
     }
 }

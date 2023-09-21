@@ -37,7 +37,7 @@ public sealed class RatingEfCoreRepository : IRatingRepository
         using (var dbContext = _dbContextFactory.CreateDbContext())
         {
             var query = dbContext.Ratings.AsNoTracking();
-            
+
             if (predicate is not null)
             {
                 query = query.Where(predicate);
@@ -115,5 +115,37 @@ public sealed class RatingEfCoreRepository : IRatingRepository
         }
 
         return ValueTask.FromResult<Exception?>(exception);
+    }
+
+    public async ValueTask<Exception?> UpdateScoreAsync(Guid id, int score)
+    {
+        Exception? exception;
+        using (var dbContext = _dbContextFactory.CreateDbContext())
+        {
+            var transaction = dbContext.Database.BeginTransaction();
+            try
+            {
+                var result = await dbContext.Ratings
+                    .Where(x => x.Id.Equals(id))
+                    .ExecuteUpdateAsync(x => x.SetProperty(c => c.Score, score));
+
+                if (result > 0)
+                {
+                    transaction.Commit();
+                    exception = null;
+                }
+                else
+                {
+                    throw new Exception($"{id} is not updated");
+                }
+            }
+            catch (Exception e)
+            {
+                exception = e;
+                transaction.Rollback();
+            }
+        }
+
+        return exception;
     }
 }

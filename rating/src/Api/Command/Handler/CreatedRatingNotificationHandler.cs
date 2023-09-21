@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Api.Command.Handler;
 
-public sealed class CreatedRatingNotificationHandler : INotificationHandler<CreatedRatingNotification>
+public sealed class CreatedRatingNotificationHandler : INotificationHandler<CalculatingRatingNotification>
 {
     private readonly ICacheDispatcher _cache;
     private readonly IBus _bus;
@@ -27,7 +27,7 @@ public sealed class CreatedRatingNotificationHandler : INotificationHandler<Crea
         _logger = logger;
     }
 
-    public async Task Handle(CreatedRatingNotification notification, CancellationToken cancellationToken)
+    public async Task Handle(CalculatingRatingNotification notification, CancellationToken cancellationToken)
     {
         var entity = notification.Entity;
         var rating = await GetRatingsAsync(entity.CraftsmanId, cancellationToken);

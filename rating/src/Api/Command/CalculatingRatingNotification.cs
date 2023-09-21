@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Api.Command;
 
-public sealed class CreatedRatingNotification : INotification
+public sealed class CalculatingRatingNotification : INotification
 {
     public RatingEntity Entity { get; }
 
-    public CreatedRatingNotification(RatingEntity entity)
+    public CalculatingRatingNotification(RatingEntity entity)
     {
         Entity = entity;
     }
