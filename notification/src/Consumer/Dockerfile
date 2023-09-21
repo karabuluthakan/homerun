@@ -4,6 +4,9 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["notification/src/Consumer/Consumer.csproj", "notification/src/Consumer/"]
+COPY ["shared/Common/Common.csproj", "shared/Common/Common/"]
+COPY ["shared/Contract/Contract.csproj", "shared/Contract/Contract/"]
+COPY ["shared/Core/Core.csproj", "shared/Core/Core/"]
 RUN dotnet restore "notification/src/Consumer/Consumer.csproj"
 COPY . .
 WORKDIR "/src/notification/src/Consumer"

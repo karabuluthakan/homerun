@@ -8,6 +8,9 @@ WORKDIR /src
 COPY ["rating/src/Api/Api.csproj", "rating/src/Api/"]
 COPY ["rating/src/Domain/Domain.csproj", "rating/src/Domain/"]
 COPY ["rating/src/Infrastructure/Infrastructure.csproj", "rating/src/Infrastructure/"]
+COPY ["shared/Common/Common.csproj", "shared/Common/Common/"]
+COPY ["shared/Contract/Contract.csproj", "shared/Contract/Contract/"]
+COPY ["shared/Core/Core.csproj", "shared/Core/Core/"]
 RUN dotnet restore "rating/src/Api/Api.csproj"
 COPY . .
 WORKDIR "/src/rating/src/Api"

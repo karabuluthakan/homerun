@@ -1,6 +1,88 @@
-﻿services:
+﻿version: '3.7'
+
+services:
   consumer:
     image: consumer
+    container_name: challenge_consumer_project
+    restart: on-failure
     build:
       context: .
       dockerfile: notification/src/Consumer/Dockerfile
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - redis
+  
+  redis:
+    image: redis
+    container_name: challenge_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis_data:/data"
+  
+  rating:
+    image: rating
+    container_name: challenge_rating_api
+    build:
+      context: .
+      dockerfile: rating/src/Api/Dockerfile
+    restart: on-failure
+    depends_on:
+      - postgres
+      - rabbitmq
+      - redis
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings_DatabaseConnection=User ID=root;Password=postgres;Host=postgres;Port=5432;Database=postgres;
+      - ConnectionStrings_CacheConnection=localhost:6379
+        
+  postgres:
+    image: postgres:latest
+    container_name: challenge_postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    hostname: postgres
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+      
+  mongodb:
+    image: mongo:latest
+    container_name: challenge_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodb_data:/data/db"
+        
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: challenge_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    hostname: challenge_rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - "rabbit_data:/rabbit/data/:var/lib/rabbitmq/"
+    
+volumes:
+  mongodb_data:
+    driver: local
+  postgres_data:
+    driver: local
+  rabbit_data:
+    driver: local
+  redis_data:
+    driver: local
+  
+  

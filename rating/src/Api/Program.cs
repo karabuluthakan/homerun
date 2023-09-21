@@ -11,9 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var programAssembly = typeof(Program).Assembly;
 var domainAssembly = AppDomain.CurrentDomain.Load("Domain");
-var infrastructureAssembly = AppDomain.CurrentDomain.Load("Infrastructure");
-var applicationAssembly = AppDomain.CurrentDomain.Load("Application");
-var assemblies = new[] { programAssembly, domainAssembly, applicationAssembly, infrastructureAssembly };
+var infrastructureAssembly = AppDomain.CurrentDomain.Load("Infrastructure"); 
+var assemblies = new[] { programAssembly, domainAssembly, infrastructureAssembly };
 
 #endregion
 
@@ -39,14 +38,14 @@ if (string.IsNullOrWhiteSpace(cacheConnectionString))
     throw new ArgumentNullException(nameof(cacheConnectionString));
 }
 
-builder.Services.AddScoped<ICacheDispatcher, RedisCacheDispatcher>();
+builder.Services.AddScoped<ICacheDispatcher>(_ => new RedisCacheDispatcher(cacheConnectionString));
 
 builder.Services
     .AddHealthCheckDependency()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(cacheConnectionString);
 
-builder.Services.AddScoped<IRatingRepository, RatingEfCoreRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingEfCoreRepository>(); 
 
 var app = builder.Build();
 app.UseDefaultDependencies();
