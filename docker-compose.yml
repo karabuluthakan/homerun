@@ -1,0 +1,6 @@
+﻿services:
+  consumer:
+    image: consumer
+    build:
+      context: .
+      dockerfile: notification/src/Consumer/Dockerfile
