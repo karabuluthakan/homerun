@@ -12,13 +12,13 @@ public sealed class RedisCacheDispatcher : ICacheDispatcher, IDisposable
     private IDatabase _database;
     private readonly object _lockObject;
     private readonly string _connectionString;
-    private readonly SemaphoreSlim _connectionLock;
+    private readonly SemaphoreSlim _connectionLock = new(1, 1);
 
     public RedisCacheDispatcher(string connectionString)
     {
         _connectionString = connectionString;
         _lockObject = new object();
-        _connectionLock = new SemaphoreSlim(1, 1);
+        Connect();
     }
 
     public bool Set(string key, object data, TimeSpan? expiry = null)

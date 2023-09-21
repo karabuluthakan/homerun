@@ -9,10 +9,8 @@ public class ChallengeDbContext : DbContext
 {
     public DbSet<RatingEntity> Ratings { get; set; }
 
-    public ChallengeDbContext(DbContextOptionsBuilder<ChallengeDbContext> optionsBuilder) : base(optionsBuilder.Options)
+    public ChallengeDbContext(DbContextOptions<ChallengeDbContext> options) : base(options)
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

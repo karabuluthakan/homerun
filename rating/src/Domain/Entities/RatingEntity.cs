@@ -3,7 +3,7 @@ using Core.Domain.Entities;
 namespace Domain.Entities;
 
 [Serializable]
-public sealed class RatingEntity : Entity
+public sealed class RatingEntity : Entity<Guid>
 {
     public int CustomerId { get; set; }
     public int CraftsmanId { get; set; }
@@ -12,6 +12,6 @@ public sealed class RatingEntity : Entity
 
     public RatingEntity()
     {
-        Id = Guid.NewGuid().ToString("N");
+        Id = Guid.NewGuid();
     }
 }

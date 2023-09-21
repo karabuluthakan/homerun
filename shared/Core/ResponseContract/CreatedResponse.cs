@@ -8,10 +8,10 @@ public sealed class CreatedResponse : ResponseBase
     {
     }
 
-    public static CreatedResponse Successful(string id, string instance, string detail = "RESOURCE_SUCCESSFULLY_CREATED")
+    public static CreatedResponse Successful(Guid id, string instance, string detail = "RESOURCE_SUCCESSFULLY_CREATED")
     {
         var response = new CreatedResponse(detail, instance);
-        response.Extensions.TryAdd("id", id);
+        response.Extensions.TryAdd("id", id.ToString("N"));
         return response;
     }
 }

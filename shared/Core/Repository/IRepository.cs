@@ -3,7 +3,7 @@ using Core.Domain.Entities;
 
 namespace Core.Repository;
 
-public interface IRepository<T> where T : Entity, new()
+public interface IRepository<T,TKey> where T : Entity<TKey>, new()
 {
     ValueTask<T?> GetAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
 

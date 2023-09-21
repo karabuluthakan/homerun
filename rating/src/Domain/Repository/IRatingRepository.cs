@@ -3,6 +3,6 @@ using Domain.Entities;
 
 namespace Domain.Repository;
 
-public interface IRatingRepository : IRepository<RatingEntity>
+public interface IRatingRepository : IRepository<RatingEntity,Guid>
 {
 }

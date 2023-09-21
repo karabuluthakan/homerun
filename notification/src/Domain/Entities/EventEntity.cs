@@ -3,7 +3,7 @@ using Core.Domain.Entities;
 
 namespace Domain.Entities;
 
-public sealed class EventEntity : Entity
+public sealed class EventEntity : Entity<string>
 {
     public string EventType { get; set; }
     public int Version { get; set; }
