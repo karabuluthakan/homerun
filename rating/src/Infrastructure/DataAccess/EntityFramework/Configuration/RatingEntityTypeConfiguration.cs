@@ -21,7 +21,8 @@ public sealed class RatingEntityTypeConfiguration : IEntityTypeConfiguration<Rat
         
         builder.Property(x => x.Id)
             .ValueGeneratedOnAdd()
-            .HasColumnName("id");
+            .HasColumnName("id")
+            .HasColumnType("uuid");
 
         builder.Property(x => x.Score)
             .HasColumnType(IntType)
