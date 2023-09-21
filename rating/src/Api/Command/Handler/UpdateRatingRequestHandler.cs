@@ -29,11 +29,7 @@ public sealed class UpdateRatingRequestHandler : IRequestHandler<UpdateRatingReq
     {
         var id = request.Id;
         var entity = await _repository.GetAsync(x => x.Id.Equals(id), cancellationToken);
-
-        if (entity is null)
-        {
-            return ErrorResponse.NotFound(Instance);
-        }
+        if (entity is null) return ErrorResponse.NotFound(Instance);
 
         var exception = await _repository.UpdateScoreAsync(id, request.Score.Score);
         if (exception is not null)

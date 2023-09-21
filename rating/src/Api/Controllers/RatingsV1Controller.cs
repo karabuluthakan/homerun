@@ -1,6 +1,8 @@
 using Api.Command;
 using Api.Extensions;
+using Api.Query;
 using Common.Swagger;
+using Core.ResponseContract;
 using Domain.DataTransferObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,12 +28,23 @@ public class RatingsV1Controller : ControllerBase
     }
 
     [HttpGet]
-    public async ValueTask<IActionResult> Get()
+    public async ValueTask<IActionResult> Index(CancellationToken cancellationToken = default)
     {
         return Ok();
     }
 
+    [HttpGet("{ratingId:guid}")]
+    public async ValueTask<IActionResult> Show(
+        [FromRoute] Guid ratingId,
+        CancellationToken cancellationToken = default)
+    {
+        var request = new GetRatingDetailRequest { Id = ratingId };
+        var response = await _mediator.Send(request, cancellationToken);
+        return this.ToResponse(response);
+    }
+
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreatedResponse))]
     public async ValueTask<IActionResult> Create(
         [FromBody] RatingDto body,
         CancellationToken cancellationToken = default)
