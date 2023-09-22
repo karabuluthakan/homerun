@@ -13,15 +13,6 @@ services:
       - rabbitmq
       - redis
   
-  redis:
-    image: redis
-    container_name: challenge_redis
-    restart: always
-    ports:
-      - "6379:6379"
-    volumes:
-      - "redis_data:/data"
-  
   rating:
     image: rating
     container_name: challenge_rating_api
@@ -37,6 +28,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings_DatabaseConnection=User ID=root;Password=postgres;Host=postgres;Port=5432;Database=postgres;
       - ConnectionStrings_CacheConnection=localhost:6379
+  
+  redis:
+    image: redis
+    container_name: challenge_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis_data:/data"
         
   postgres:
     image: postgres:latest
