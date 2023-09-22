@@ -1,6 +1,6 @@
+using Api.Extensions;
 using Core.ResponseContract;
-using Core.ResponseContract.Abstract;
-using Domain.DataTransferObjects;
+using Core.ResponseContract.Abstract; 
 using Domain.Repository;
 using MediatR; 
 
@@ -22,13 +22,7 @@ public class GetRatingDetailRequestHandler : IRequestHandler<GetRatingDetailRequ
     {
         var entity = await _repository.GetAsync(x => x.Id.Equals(request.Id), cancellationToken);
         if (entity is null) return ErrorResponse.NotFound(Instance);
-        var data = new RatingDto
-        {
-            CustomerId = entity.CustomerId,
-            Score = entity.Score,
-            CraftsmanId = entity.CraftsmanId,
-            TaskId = entity.TaskId
-        };
+        var data = entity.ToDto();
         return DataResponse.Successful(data, Instance);
     }
 }

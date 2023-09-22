@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Core.Attributes;
 using Core.Extensions;
 using Core.ResponseContract.Converters;
 

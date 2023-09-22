@@ -25,7 +25,6 @@ public static class ServiceCollectionExtensions
         services.AddControllerDependency();
         services.AddCorsDependency();
         services.AddApiVersionDependency();
-        services.AddSwaggerDependency();
     }
 
     private static void AddControllerDependency(this IServiceCollection services)
@@ -94,18 +93,16 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
     }
 
-    private static void AddSwaggerDependency(this IServiceCollection services)
+    public static void AddSwaggerDependency(this IServiceCollection services,string xmlPath)
     {
         services.AddSwaggerGen(options =>
             {
                 options.OperationFilter<SwaggerDefaultValuesFilter>();
                 options.SchemaFilter<SwaggerAutoRestSchemaFilter>();
-                options.DocumentFilter<SwaggerJsonPatchDocumentFilter>();
+                options.SchemaFilter<SwaggerIgnoreEnumSchemaFilter>();
                 options.EnableAnnotations(enableAnnotationsForInheritance: true,
                     enableAnnotationsForPolymorphism: true);
                 options.ResolveConflictingActions(x => x.First());
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
                 options.ExampleFilters();
                 options.UseAllOfForInheritance();

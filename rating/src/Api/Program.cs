@@ -1,3 +1,4 @@
+using System.Reflection;
 using Common.DependencyResolvers;
 using Domain.CrossCuttingConcern.Caching;
 using Domain.Repository; 
@@ -44,6 +45,9 @@ builder.Services
     .AddHealthCheckDependency()
     .AddNpgSql(databaseConnectionString)
     .AddRedis(cacheConnectionString);
+var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+builder.Services.AddSwaggerDependency(xmlPath);
 
 builder.Services.AddScoped<IRatingRepository, RatingEfCoreRepository>(); 
 

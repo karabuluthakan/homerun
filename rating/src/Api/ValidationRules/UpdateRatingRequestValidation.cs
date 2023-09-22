@@ -11,9 +11,7 @@ public class UpdateRatingRequestValidation : AbstractValidator<UpdateRatingReque
         RuleFor(x => x.Score).NotNull();
         When(x => x.Score is not null, () =>
         {
-            RuleFor(x => x.Score.Score)
-                .GreaterThanOrEqualTo(1)
-                .LessThanOrEqualTo(5);
+            RuleFor(x =>x.Score).SetValidator(new ScoreDtoValidation());
         });
     }
 }

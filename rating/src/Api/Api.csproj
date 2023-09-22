@@ -5,11 +5,13 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="7.0.0"/>
-        <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="7.0.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="7.0.1"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,9 +26,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\shared\Common\Common.csproj"/>
-        <ProjectReference Include="..\..\..\shared\Contract\Contract.csproj" />
+        <ProjectReference Include="..\..\..\shared\Contract\Contract.csproj"/>
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
     </ItemGroup>
+
 
 
 </Project>
