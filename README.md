@@ -10,7 +10,7 @@ You can download the project with "git clone https://github.com/karabuluthakan/h
 | `Rest Api Uri Naming` | https://restfulapi.net/resource-naming/               |
 | `Restful Api Guidelines` | https://opensource.zalando.com/restful-api-guidelines/ |
 
-### * You can use the `/health` endpoint to check the system healthy or `/health-ui`
+### * You can use the `/health` or `/health-ui` endpoint to check the system healthy
 
 #### APPLICATION ARCHITECTURE
 
